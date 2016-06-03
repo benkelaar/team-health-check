@@ -1,0 +1,69 @@
+body {
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+section {
+  display: inline-table;
+}
+
+#checks table {
+  margin: 20px;
+}
+
+#checks td {
+  padding: 5px;
+}
+
+thead {
+  font-weight: 700;
+  color: white;
+}
+
+#checks thead {
+    background-color: #ed7d31;
+    font-size: 18px;
+}
+
+#checks tbody tr {
+  background-color: #f8d7cd;
+}
+
+#checks tbody tr:nth-child(even) {
+  background-color: #fcece8;
+}
+
+#mission h1 {
+  color: black;
+  font-size: 20px;
+}
+
+#mission {
+  font-family: Trebuchet MS1, Trebuchet MS, sans-serif;
+  color: #3366cc;
+  text-align: right;
+  font-size: 10px;
+}
+
+#legend table {
+  margin-top: 30px;
+  margin-left: auto;
+  border-spacing: 0px;
+}
+
+#legend thead {
+  background-color: #5b9bd5;
+}
+
+#legend th {
+  border-left: 2px solid white;
+}
+
+#legend td {
+  border-bottom: 2px solid black;
+}
+
+img {
+  height: 64px;
+  margin: auto;
+  display: block;
+}

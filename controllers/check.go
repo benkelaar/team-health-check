@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/benkelaar/team-health-check/models"
 	"github.com/julienschmidt/httprouter"
@@ -30,7 +31,7 @@ func (cc CheckController) GetCheck(w http.ResponseWriter, r *http.Request, p htt
 	fmt.Printf("Call to get check %s\n", id)
 	// Stub an example user
 	c := models.Check{
-		ID:   id,
+		ID:   bson.ObjectId("foo"),
 		Name: "Bart Enkelaar",
 		Team: "Team15b",
 		Health: map[string]models.State{
@@ -57,15 +58,18 @@ func (cc CheckController) GetCheck(w http.ResponseWriter, r *http.Request, p htt
 func (cc CheckController) PostCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// Stub an user to be populated from the body
 	c := models.Check{}
+	session := cc.session.Copy()
+	defer session.Close()
 
 	// Populate the user data
 	json.NewDecoder(r.Body).Decode(&c)
 
 	// Add an Id
-	c.ID = "foo"
+	c.ID = bson.NewObjectId()
 	c.Timestamp = now()
 	fmt.Println(c)
-
+	cc.session.DB("teamhealth").C("users").Insert(c)
+	// use session rather tha
 	// Marshal provided interface into JSON structure
 	cj, err := json.Marshal(c)
 	if err != nil {
