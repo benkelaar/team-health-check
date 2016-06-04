@@ -6,6 +6,13 @@ section {
   display: inline-table;
 }
 
+.modifiable:hover {
+  background-color: #37638b;
+  -moz-box-shadow: 0 0 12px white inset;
+  -webkit-box-shadow: 0 0 12px white inset;
+  box-shadow: 0 0 12px white inset;
+}
+
 #checks {
   margin: 20px;
 }
