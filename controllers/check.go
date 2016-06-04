@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -28,58 +29,57 @@ func NewCheckController(s *mgo.Session) *CheckController {
 // GetCheck gets a check
 func (cc CheckController) GetCheck(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var id = p.ByName("id")
-	fmt.Printf("Call to get check %s\n", id)
-	// Stub an example user
-	c := models.Check{
-		ID:   bson.ObjectId("foo"),
-		Name: "Bart Enkelaar",
-		Team: "Team15b",
-		Health: map[string]models.State{
-			"Ownership": models.State{
-				Level:     models.Orange,
-				Direction: models.Up,
-			},
-		},
-		Timestamp: now(),
+	log.Printf("Call to get check %s\n", id)
+
+	if !bson.IsObjectIdHex(id) {
+		w.WriteHeader(404)
+		return
 	}
 
-	cj, err := json.Marshal(c)
-	if err != nil {
-		panic(err)
+	session := cc.session.Copy()
+	defer session.Close()
+	oid := bson.ObjectIdHex(id)
+	c := models.Check{}
+
+	if err := connect(session).FindId(oid).One(&c); err != nil {
+		w.WriteHeader(404)
+		return
 	}
 
-	// Write content-type, statuscode, payload
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	fmt.Fprintf(w, "%s", cj)
+	writeCheckResponse(w, c, 200)
 }
 
 // PostCheck posts a new check, check with ID is returned
 func (cc CheckController) PostCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Stub an user to be populated from the body
-	c := models.Check{}
 	session := cc.session.Copy()
 	defer session.Close()
 
-	// Populate the user data
+	c := models.Check{}
 	json.NewDecoder(r.Body).Decode(&c)
-
-	// Add an Id
 	c.ID = bson.NewObjectId()
 	c.Timestamp = now()
-	fmt.Println(c)
-	cc.session.DB("teamhealth").C("users").Insert(c)
-	// use session rather tha
-	// Marshal provided interface into JSON structure
-	cj, err := json.Marshal(c)
+	log.Println(c)
+
+	connect(session).Insert(c)
+	writeCheckResponse(w, c, 201)
+}
+
+func connect(session *mgo.Session) *mgo.Collection {
+	return session.DB("teamhealth").C("checks")
+}
+
+func writeCheckResponse(w http.ResponseWriter, data interface{}, code int) {
+	dj, err := json.Marshal(data)
 	if err != nil {
 		panic(err)
 	}
 
 	// Write content-type, statuscode, payload
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(201)
-	fmt.Fprintf(w, "%s", cj)
+	headers := w.Header()
+	headers.Set("Content-Type", "application/json")
+
+	w.WriteHeader(code)
+	fmt.Fprintf(w, "%s", dj)
 }
 
 func now() int64 {
