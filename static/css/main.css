@@ -6,6 +6,17 @@ section {
   display: inline-table;
 }
 
+thead {
+  font-weight: 700;
+  color: white;
+}
+
+img {
+  height: 64px;
+  margin: auto;
+  display: block;
+}
+
 .modifiable:hover {
   background-color: #37638b;
   -moz-box-shadow: 0 0 12px white inset;
@@ -17,22 +28,17 @@ section {
   margin: 20px;
 }
 
+#checks thead {
+    background-color: #ed7d31;
+    font-size: 18px;
+}
+
 #checks td,th {
   padding: 5px;
 }
 
 #checks th {
   padding-bottom: 20px;
-}
-
-thead {
-  font-weight: 700;
-  color: white;
-}
-
-#checks thead {
-    background-color: #ed7d31;
-    font-size: 18px;
 }
 
 #checks tbody tr {
@@ -43,9 +49,9 @@ thead {
   background-color: #fcece8;
 }
 
-#mission h1 {
-  color: black;
-  font-size: 20px;
+#save {
+  display: block;
+  margin: 10px auto;
 }
 
 #mission {
@@ -53,6 +59,12 @@ thead {
   color: #3366cc;
   text-align: right;
   font-size: 10px;
+  margin-left: 50px;
+}
+
+#mission h1 {
+  color: black;
+  font-size: 20px;
 }
 
 #legend {
@@ -76,10 +88,4 @@ thead {
 
 #legend td {
   border-bottom: 2px solid black;
-}
-
-img {
-  height: 64px;
-  margin: auto;
-  display: block;
 }
