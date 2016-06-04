@@ -16,6 +16,10 @@ func main() {
 	log.Println("Starting team health check server")
 	r := httprouter.New()
 	cc := controllers.NewCheckController(getSession())
+	tc := controllers.NewUserController(getSession())
+
+	r.GET("/v1/teams", tc.GetTeams)
+	r.GET("/v1/teams/:team/members", tc.GetMembers)
 
 	r.GET("/v1/checks/:id", cc.GetCheck)
 	r.POST("/v1/checks", cc.PostCheck)
