@@ -57,12 +57,12 @@ THC.populateTable = function (data) {
     .append($('<thead><tr><th>'+team+'</th></tr></thead><tbody />'));
 
   function showValue(name, value, column) {
-    var id      = '#' + name,
-        row     = table.find(id),
+    var select  = 'tr[id=\'' + name + '\']',
+        row     = table.find(select),
         imgName = value.level + '-' + value.direction,
         row     = row.length ? row :
             table.find('tbody')
-                .append($('<tr id="'+name+'"><td>'+name+'</td></tr>')).find(id),
+                .append($('<tr id="'+name+'"><td>'+name+'</td></tr>')).find(select),
         cur     = row.find('td').length,
         img     = $('<td><img src="images/'+imgName+'.png"></td>');
 
@@ -100,8 +100,29 @@ THC.loadTable = function () {
   });
 };
 
+THC.storeNewData = function () {
+  var checks = $('#checks tbody tr'),
+      data   = {name: THC.team, health: {}};
+  checks.each(function (i, e) {
+    var $e    = $(e),
+        label = $e.find('td:first-child').html(),
+        value = $e.find('td:last-child').data('lvl').split('-');
+    data.health[label] = {level: value[0], direction: value[1]};
+  });
+
+  $.ajax({
+    url: 'http://localhost:3000/v1/checks',
+    method: 'POST',
+    data: JSON.stringify(data),
+    success: function (data) {
+      location.reload();
+    }
+  });
+};
+
 $(document).ready(function () {
   THC.team = THC.getParameterByName('team');
   if (!THC.team) THC.team = 'Team15b';
   THC.loadTable();
+  $('#save').click(THC.storeNewData);
 });
