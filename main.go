@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"gopkg.in/mgo.v2"
@@ -13,16 +13,18 @@ import (
 func main() {
 	var port = "3000"
 
-	fmt.Println("Starting team health check server")
+	log.Println("Starting team health check server")
 	r := httprouter.New()
 	cc := controllers.NewCheckController(getSession())
 
 	r.GET("/v1/checks/:id", cc.GetCheck)
-	r.POST("/v1/checks/", cc.PostCheck)
+	r.POST("/v1/checks", cc.PostCheck)
 
-	fmt.Printf("Listening on port %s\n", port)
+	r.GET("/v1/checks", cc.FindCheck)
+
+	log.Printf("Listening on port %s\n", port)
 	http.ListenAndServe("localhost:"+port, r)
-	defer fmt.Printf("Closing team health check server")
+	log.Printf("Closing team health check server")
 }
 
 func getSession() *mgo.Session {
@@ -31,6 +33,7 @@ func getSession() *mgo.Session {
 
 	// Check if connection error, is mongo running?
 	if err != nil {
+		log.Panic(err)
 		panic(err)
 	}
 	return s

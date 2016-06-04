@@ -49,6 +49,36 @@ func (cc CheckController) GetCheck(w http.ResponseWriter, r *http.Request, p htt
 	writeCheckResponse(w, c, 200)
 }
 
+// FindCheck finds team or user checks
+func (cc CheckController) FindCheck(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	team := r.FormValue("team")
+	user := r.FormValue("user")
+	log.Printf("Call to find checks for team %s and user %s\n", team, user)
+
+	if team == "" && user == "" {
+		w.WriteHeader(400)
+		return
+	}
+
+	session := cc.session.Copy()
+	defer session.Close()
+	checks := []models.Check{}
+	q := bson.M{
+		"name": team,
+	}
+	if user != "" {
+		q["name"] = user
+	}
+
+	if err := connect(session).Find(q).All(&checks); err != nil {
+		w.WriteHeader(404)
+		log.Println(err)
+		return
+	}
+
+	writeCheckResponse(w, checks, 200)
+}
+
 // PostCheck posts a new check, check with ID is returned
 func (cc CheckController) PostCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	session := cc.session.Copy()
