@@ -58,8 +58,13 @@ thead {
   background-color: #5b9bd5;
 }
 
-#legend th {
+#legend thead div:first-child {
+    margin-bottom: 18px;
+}
+
+#legend th:not(:first-child) {
   border-left: 2px solid white;
+  vertical-align: bottom;
 }
 
 #legend td {

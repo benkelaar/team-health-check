@@ -19,13 +19,16 @@ THC.populateTable = function (data, team) {
   function showValue(name, value, column) {
     var id  = '#' + name,
         row = table.find(id),
-        img = value.level + '-' + value.direction;
+        img = value.level + '-' + value.direction,
+        row = row.length ? row : table.find('tbody')
+            .append($('<tr id="'+name+'"><td>'+name+'</td></tr>')).find(id),
+        cur = row.find('td').length
 
-    row = row.length ? row : table.find('tbody')
-        .append($('<tr id="'+name+'"><td>'+name+'</td></tr>')).find(id);
-
-    if (row.find('td').length != (column - 1)) {
-      
+    // Add missing columns if previous dates did not have a check
+    if (cur != column) {
+      for(var i = cur; i < column; i++) {
+        row.append($('<td />'));
+      }
     }
     row.append($('<td><img src="images/'+img+'.png"></td>'));
   }
@@ -34,7 +37,7 @@ THC.populateTable = function (data, team) {
     var time   = new Date(check.time),
         day    = time.getDate() + '-' + (time.getMonth() + 1),
         column = table.find('thead tr').append($('<th>'+day+'</th>'))
-                      .find('th').length;
+                      .find('th').length - 1;
     for (var key in check.health) {
       showValue(key, check.health[key], column);
     }
