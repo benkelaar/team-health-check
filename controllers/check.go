@@ -107,6 +107,9 @@ func writeCheckResponse(w http.ResponseWriter, data interface{}, code int) {
 	// Write content-type, statuscode, payload
 	headers := w.Header()
 	headers.Set("Content-Type", "application/json")
+	headers.Add("Access-Control-Allow-Origin", "*")
+	headers.Add("Access-Control-Allow-Headers", "Content-Type")
+	headers.Add("Access-Control-Max-Age", "86400")
 
 	w.WriteHeader(code)
 	fmt.Fprintf(w, "%s", dj)
