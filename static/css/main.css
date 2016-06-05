@@ -49,6 +49,10 @@ img {
   background-color: #fcece8;
 }
 
+#checks img {
+    height: 40px;
+}
+
 #save {
   display: block;
   margin: 10px auto;
