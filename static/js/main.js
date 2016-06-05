@@ -27,6 +27,10 @@ THC.getParameterByName = function (name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 
+THC.setSaveState = function () {
+  $('#save').prop('disabled', $('#checks td:last-child:not(.set)').length);
+};
+
 THC.activateModifiables = function () {
   function clickEvent(e) {
     var td   = $(e.currentTarget),
@@ -40,6 +44,7 @@ THC.activateModifiables = function () {
     td.data('lvl', next);
     td.addClass('set');
     td.find('img').attr('src', '/static/images/'+next+'.png');
+    THC.setSaveState()
     return false;
   }
 
@@ -127,4 +132,5 @@ $(document).ready(function () {
 
   THC.loadTable();
   $('#save').click(THC.storeNewData);
+  THC.setSaveState();
 });
