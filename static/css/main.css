@@ -22,6 +22,15 @@ img {
   -moz-box-shadow: 0 0 12px white inset;
   -webkit-box-shadow: 0 0 12px white inset;
   box-shadow: 0 0 12px white inset;
+  cursor: pointer;
+}
+
+.modifiable:not(:hover) img {
+  display: none;
+}
+
+.modifiable.set img {
+  display: block;
 }
 
 #checks {

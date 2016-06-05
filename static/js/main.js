@@ -38,6 +38,7 @@ THC.activateModifiables = function () {
         next = THC.list[to];
 
     td.data('lvl', next);
+    td.addClass('set');
     td.find('img').attr('src', '/static/images/'+next+'.png');
     return false;
   }
@@ -72,8 +73,8 @@ THC.populateTable = function (data) {
         row.append($('<td />'));
       }
     }
-    img.data('lvl', imgName);
-    row.append(img);
+
+    row.append(img.data('lvl', imgName));
   }
 
   function showCheck(check) {
@@ -123,7 +124,7 @@ THC.storeNewData = function () {
 $(document).ready(function () {
   THC.team = THC.getParameterByName('team');
   if (!THC.team) THC.team = 'Team15b';
-  
+
   THC.loadTable();
   $('#save').click(THC.storeNewData);
 });
