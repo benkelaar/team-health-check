@@ -91,7 +91,7 @@ img {
 }
 
 #legend thead div:first-child {
-    margin-bottom: 18px;
+    margin-bottom: 24px;
 }
 
 #legend th:not(:first-child) {
@@ -101,4 +101,13 @@ img {
 
 #legend td {
   border-bottom: 2px solid black;
+}
+
+#bar {
+  width: 160px;
+  border-bottom: 1px solid white;
+  position: absolute;
+  transform: rotate(28deg);
+  margin-top: -33px;
+  margin-left: -10px;
 }
