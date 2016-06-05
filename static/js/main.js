@@ -38,7 +38,7 @@ THC.activateModifiables = function () {
         next = THC.list[to];
 
     td.data('lvl', next);
-    td.find('img').attr('src', 'images/'+next+'.png');
+    td.find('img').attr('src', '/static/images/'+next+'.png');
     return false;
   }
 
@@ -64,7 +64,7 @@ THC.populateTable = function (data) {
             table.find('tbody')
                 .append($('<tr id="'+name+'"><td>'+name+'</td></tr>')).find(select),
         cur     = row.find('td').length,
-        img     = $('<td><img src="images/'+imgName+'.png"></td>');
+        img     = $('<td><img src="/static/images/'+imgName+'.png"></td>');
 
     // Add missing columns if previous dates did not have a check
     if (cur != column) {
@@ -95,7 +95,7 @@ THC.populateTable = function (data) {
 };
 
 THC.loadTable = function () {
-  $.ajax('http://localhost:3000/v1/checks?team=' + THC.team, {
+  $.ajax('/v1/checks?team=' + THC.team, {
     success: THC.populateTable
   });
 };
@@ -111,7 +111,7 @@ THC.storeNewData = function () {
   });
 
   $.ajax({
-    url: 'http://localhost:3000/v1/checks',
+    url: '/v1/checks',
     method: 'POST',
     data: JSON.stringify(data),
     success: function (data) {
@@ -123,6 +123,7 @@ THC.storeNewData = function () {
 $(document).ready(function () {
   THC.team = THC.getParameterByName('team');
   if (!THC.team) THC.team = 'Team15b';
+  
   THC.loadTable();
   $('#save').click(THC.storeNewData);
 });

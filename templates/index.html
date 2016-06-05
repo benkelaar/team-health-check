@@ -1,3 +1,4 @@
+{{define "index"}}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
@@ -6,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Team Health Check</title>
 
-	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="/static/css/main.css" />
 </head>
 <body>
   <section>
@@ -45,32 +46,33 @@
       <tbody>
         <tr>
           <td>Good</td>
-          <td><img src="images/green-same.png"></td>
-          <td><img src="images/green-up.png"></td>
-          <td><img src="images/green-down.png"></td>
+          <td><img src="/static/images/green-same.png"></td>
+          <td><img src="/static/images/green-up.png"></td>
+          <td><img src="/static/images/green-down.png"></td>
         </tr>
         <tr>
           <td>Minor Issues</td>
-          <td><img src="images/yellow-same.png"></td>
-          <td><img src="images/yellow-up.png"></td>
-          <td><img src="images/yellow-down.png"></td>
+          <td><img src="/static/images/yellow-same.png"></td>
+          <td><img src="/static/images/yellow-up.png"></td>
+          <td><img src="/static/images/yellow-down.png"></td>
         </tr>
         <tr>
           <td>Needs More Attention</td>
-          <td><img src="images/orange-same.png"></td>
-          <td><img src="images/orange-up.png"></td>
-          <td><img src="images/orange-down.png"></td>
+          <td><img src="/static/images/orange-same.png"></td>
+          <td><img src="/static/images/orange-up.png"></td>
+          <td><img src="/static/images/orange-down.png"></td>
         </tr>
         <tr>
           <td>Needs Immediate Action</td>
-          <td><img src="images/red-same.png"></td>
-          <td><img src="images/red-up.png"></td>
-          <td><img src="images/red-down.png"></td>
+          <td><img src="/static/images/red-same.png"></td>
+          <td><img src="/static/images/red-up.png"></td>
+          <td><img src="/static/images/red-down.png"></td>
         </tr>
       </tbody>
     </table>
   </section>
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/static/js/jquery-2.2.4.min.js"></script>
+  <script src="/static/js/main.js"></script>
 </body>
 </html>
+{{end}}

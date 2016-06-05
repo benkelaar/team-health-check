@@ -101,6 +101,7 @@ func connect(session *mgo.Session) *mgo.Collection {
 func writeCheckResponse(w http.ResponseWriter, data interface{}, code int) {
 	dj, err := json.Marshal(data)
 	if err != nil {
+		log.Panic(err.Error())
 		panic(err)
 	}
 
